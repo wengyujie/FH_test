@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="styleSheet" type="text/css" href="indexcss.css" >
+
+</head>
+
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js"></script>
+
+<body>
+<div id="total">
+    <div class="line">
+        <button id="btn1">查看折线图</button>
+    </div>
+
+    <div class="bar">
+        <button id="btn2">查看柱状图</button>
+    </div>
+</div>
+
+
+<div id="container" style="height: 430px;width: 500px"></div>
+
+<div id="container1" style="height: 430px;width: 500px"></div>
+
+<script>
+    $(document).ready(function(){
+            $("#container").hide();
+            $("#container1").hide();
+    });
+</script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $("#btn1").click(function(){
+
+            $("#container").show();
+            $("#container1").hide();
+        });
+    });
+
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, null, {
+        renderer: 'canvas',
+        useDirtyRect: false
+    });
+    var app = {};
+
+    draw(); //获取后端传来的json对象并绘图
+    var xxarea=[];
+    var yyarea=[];
+
+    function draw() {
+        $.ajax({
+            type: "post",
+            async: true, //异步请求(默认也是异步)
+            url: "${pageContext.request.contextPath}/ajaxrequest/getCoordinate.action", //请求发送到后台controller的地址
+            dataType: "json", //返回数据形式为json
+            success: function (results) { //result参数是服务器返回的json对象，这个参数是自带的
+                if (results != null) {
+                    results=eval(results);
+                    yyarea.push(results.y) //取出Json对象中的值，作为绘图时的data
+                    xxarea.push(results.x)
+
+                    var option;
+
+                    option = {
+                        xAxis: {
+                            type: 'category',
+                            data: xxarea
+                        },
+                        yAxis: {
+                            type: 'value'
+                        },
+                        series: [
+                            {
+                                data: yyarea,
+                                type: 'line'
+                            }
+                        ]
+                    };
+
+                    if (option && typeof option === 'object') {
+                        myChart.setOption(option);
+                    }
+
+                    window.addEventListener('resize', myChart.resize);
+                }
+            },
+            error: function (errorMsg) {
+                //请求失败时执行该函数
+                alert("图表请求数据失败!");
+            }
+        })
+    }
+
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $("#btn2").click(function(){
+
+            $("#container1").show();
+            $("#container").hide();
+        });
+
+
+    });
+
+    var dom = document.getElementById('container1');
+    var myChart = echarts.init(dom, null, {
+        renderer: 'canvas',
+        useDirtyRect: false
+    });
+    var app = {};
+
+    var option;
+
+
+    var xarea=[];
+    var yarea=[];
+
+
+    xarea=[1,2,3,4,5,6,7,8,9,8,7,6,5];
+
+
+    yarea=[120, 200, 150, 80, 70, 110, 130,8,9,8,7,6,5];
+
+
+    option = {
+        xAxis: {
+            type: 'category',
+            data: xarea
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                data: yarea,
+                type: 'bar',
+                showBackground: true,
+                backgroundStyle: {
+                    color: 'rgba(180, 180, 180, 0.2)'
+                }
+            }
+        ]
+    };
+
+    if (option && typeof option === 'object') {
+        myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+</script>
+
+</body>
+</html>
