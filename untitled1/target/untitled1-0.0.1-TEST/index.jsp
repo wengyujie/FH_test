@@ -141,5 +141,39 @@
         <form action="${pageContext.request.contextPath}/DirectWithData/RedirectWithData.action?name=redirect"  method="get">
             <input type="submit" value="带数据重定向">
         </form>
+
+        <hr>
+        <form action="javascript:showData()">
+            <input type="submit" value="取数据">
+        </form>
+        <div id="dataDiv">div，用来显示服务器返回的数据</div>
+        <script type="text/javascript">
+            function showData() {
+                //使用jQuery封装的ajax()发送ajax消息
+                $.ajax({
+                    url:"${pageContext.request.contextPath}/ajaxrequest/getCoordinate.action",
+                    type:"get",
+                    dataType:"json",
+                    success:function (coordinate) {
+                        console.log(typeof coordinate)
+                        coordinate = eval(coordinate)
+
+                        console.log(typeof coordinate)
+                        console.log(coordinate)
+
+                        var data = ""
+                        var xlist = coordinate.x
+                        var ylist = coordinate.y
+
+                        for (var i=0;i<xlist.length;i++){
+                            data += "|" +xlist[i] + "|" + ylist[i] + "|" +"<br>"
+                        }
+
+                        //将拼接好的数据回显在div中
+                        $("#userDiv").html(data)
+                    }
+                })
+            }
+        </script>
     </body>
 </html>

@@ -25,5 +25,6 @@
 
     <mappers>
         <mapper resource="com/Dao/UserDBMapper.xml"/>
+        <mapper resource="com/Dao/CoordianteTableMapper.xml"/>
     </mappers>
 </configuration>

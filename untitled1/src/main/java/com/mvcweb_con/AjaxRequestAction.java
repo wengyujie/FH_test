@@ -1,5 +1,8 @@
 package com.mvcweb_con;
+import com.Dao.CoordianteTableDao;
 import com.Dao.UserDBDao;
+import com.mvcweb_con.subclass.CoordianteTable;
+import com.mvcweb_con.subclass.Coordinate;
 import com.mvcweb_con.subclass.User;
 import com.mvcweb_con.subclass.UserDB;
 import com.utils.MybatisUtils;
@@ -60,5 +63,32 @@ public class AjaxRequestAction {
         System.out.println("jquery use success");
 
         return "jquery use success";
+    }
+
+    @RequestMapping("getCoordinate.action")
+    @ResponseBody
+    public Coordinate getCoordinate() {
+        System.out.println("Start Get Coordiante Data");
+        Coordinate coordinate = new Coordinate();
+        try
+        {
+            sqlSession = MybatisUtils.getSqlSession();
+            //方式一:getMapper
+            CoordianteTableDao mapper = sqlSession.getMapper(CoordianteTableDao.class);
+            List<CoordianteTable> coordinateTableList = mapper.getCoordinateList();
+            for (CoordianteTable coordinateTable : coordinateTableList)
+            {
+                System.out.println(coordinateTable);
+                coordinate.insertX(coordinateTable.getX());
+                coordinate.insertY(coordinateTable.getY());
+            }
+            sqlSession.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return coordinate;
     }
 }
