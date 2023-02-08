@@ -80,7 +80,9 @@ public class AjaxRequestAction {
             {
                 System.out.println(coordinateTable);
                 coordinate.insertX(coordinateTable.getX());
+                //coordinate.insertX(i.toString());
                 coordinate.insertY(coordinateTable.getY());
+                //i++;
             }
             sqlSession.close();
         }

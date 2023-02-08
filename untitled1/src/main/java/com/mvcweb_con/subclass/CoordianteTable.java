@@ -2,7 +2,7 @@ package com.mvcweb_con.subclass;
 
 public class CoordianteTable {
     private int id;
-    private int x;
+    private String x;
     private int y;
 
     public int getId() {
@@ -13,11 +13,12 @@ public class CoordianteTable {
         this.id = id;
     }
 
-    public int getX() {
+    public String getX() {
+
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(String x) {
         this.x = x;
     }
 

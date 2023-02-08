@@ -7,7 +7,9 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
   <display-name>Archetype Created Web Application</display-name>
-
+  <welcome-file-list>
+    <welcome-file>/index.html</welcome-file>
+  </welcome-file-list>
   <!--  配置前端控制器-->
   <servlet>
     <servlet-name>mvcweb_springmvcServlet</servlet-name>
@@ -23,6 +25,20 @@
     <servlet-name>mvcweb_springmvcServlet</servlet-name>
     <!--    /表示映射jsp之外的全部请求-->
     <url-pattern>*.action</url-pattern>
+    <url-pattern>*.jpg</url-pattern>
+    <url-pattern>*.css</url-pattern>
+    <url-pattern>*.png</url-pattern>
+    <url-pattern>*.gif</url-pattern>
+    <url-pattern>*.js</url-pattern>
+    <url-pattern>*.swf</url-pattern>
+    <url-pattern>*.pdf</url-pattern>
+    <url-pattern>*.java</url-pattern>
+    <url-pattern>*.class</url-pattern>
+    <url-pattern>*.xls</url-pattern>
+    <url-pattern>*.xlsx</url-pattern>
+    <url-pattern>*.et</url-pattern>
+    <url-pattern>*.vm</url-pattern>
+    <url-pattern>*.html</url-pattern>
   </servlet-mapping>
 
   <!--配置编码过滤器-->
